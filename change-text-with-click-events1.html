@@ -1,0 +1,101 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('getMessage').onclick = function(){
+      
+      document.getElementsByClassName('message')[0].textContent="Here is the message";
+
+    }
+  });
+</script>
+
+<style>
+  body {
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .box {
+    border-radius: 5px;
+    background-color: #eee;
+    padding: 20px 5px;
+  }
+  button {
+    color: white;
+    background-color: #4791d0;
+    border-radius: 5px;
+    border: 1px solid #4791d0;
+    padding: 5px 10px 8px 10px;
+  }
+  button:hover {
+    background-color: #0F5897;
+    border: 1px solid #0F5897;
+  }
+</style>
+
+<h1>Cat Photo Finder</h1>
+<p class="message box">
+  The message will go here
+</p>
+<p>
+  <button id="getMessage">
+    Get Message
+  </button>
+</p>
+
+
+<!--
+  Q:
+  document.getElementsByClassName('message')[0] in this statement is the [0] put there to only apply whatever we want to the first element with the class name message?
+
+  GPT:
+  Yes, that's correct. The getElementsByClassName method returns a collection of elements with the specified class name. The collection is an HTMLCollection object, which is an array-like object that contains all the elements with the specified class name.
+
+The [0] index is used to access the first element in the HTMLCollection. If you want to apply something to all of the elements in the collection, you can use a loop to iterate over each element.
+
+For example, if you have multiple elements with the class name message on a page and you want to change the text color of all of them, you could do something like this:
+
+        let messages = document.getElementsByClassName('message');
+
+        for (let i = 0; i < messages.length; i++) {
+          messages[i].style.color = 'red';
+        }
+
+This code gets a collection of all the elements with the class name message, and then it iterates over each element in the collection, setting the color property of the style object to 'red' to change the text color to red.
+
+  Q:
+  Awesome thank you also what does the .textContent() method do?
+
+  GPT:
+  The textContent property of an element refers to the text content of the element and its descendants. The textContent property is a way to access or set the text content of an element.
+
+The textContent property can be used to get the text content of an element like this:
+
+        let text = element.textContent;
+
+This will store the text content of the element in the text variable.
+
+The textContent property can also be used to set the text content of an element like this:
+
+        element.textContent = 'some new text';
+
+This will replace the current text content of the element with the string 'some new text'.
+
+The textContent property is useful for getting or setting the text content of an element, but it has some limitations. It only works with text content, so it cannot be used to get or set HTML content. It also removes all of the child nodes of the element, including elements and attributes, when it is set.
+
+For example, if the element has the following HTML content:
+
+        <p>This is a <strong>paragraph</strong> with <em>some</em> text.</p>
+
+And you set the textContent property like this:
+
+        element.textContent = 'some new text';
+
+The element will now have the following HTML content:
+
+        <p>some new text</p>
+
+The strong and em elements and the text they contain have been removed, and only the string 'some new text' remains.
+-->
