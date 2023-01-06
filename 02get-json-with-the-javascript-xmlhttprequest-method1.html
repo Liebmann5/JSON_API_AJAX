@@ -1,0 +1,181 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('getMessage').onclick = function(){
+      
+      //XMLHttpRequest is a {JS}obj instance we create; to use its methods and properties, ?IN ORDER TO TRANSFER DATA BETWEEN US AND THE API?
+      const req = new XMLHttpRequest();
+      //.open() initializes a request{?method opens up communication to the API for us to give or get data?}
+      //here we are requesting data from the API so 'GET' is our first argument
+      //2nd argument ??is the URL of the API you are requesting data from????
+      //3rd argument is a boolean value where true=asynchronous request & false=synchronous request
+      req.open("GET", 'json/cats.json', true);
+      //the send() method sends the request; ???is the request sent to the server so the server can send a request to the API??? STEP 3
+      req.send();
+      //The onload event handler
+      req.onload = function(){
+        //parses the returned data
+        const json = JSON.parse(req.responseText);
+        //Applies the JSON.stringify method to convert the JavaScript object into a string. This string is then inserted as the message text.
+        document.getElementsByClassName('message')[0].innerHTML = JSON.stringify(json); //NOTE: <p class="message box"> HAS 2 CLASSES!!!!!!!
+      };
+      //REMEMBER if the JSON is sent from an API it is sent from the API as a byte!!! THEN our application recieves it as a string!!!!{These are not JS objs!!}
+      //BELIEF: Pretty sure a byte is a set of key-value pairs... I just dont know if they are = or that's the name of the string it sends???
+      //JSON.parse method parses the string and constructs ?the string code into a JS object?
+
+    };
+  });
+</script>
+
+<style>
+  body {
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .box {
+    border-radius: 5px;
+    background-color: #eee;
+    padding: 20px 5px;
+  }
+  button {
+    color: white;
+    background-color: #4791d0;
+    border-radius: 5px;
+    border: 1px solid #4791d0;
+    padding: 5px 10px 8px 10px;
+  }
+  button:hover {
+    background-color: #0F5897;
+    border: 1px solid #0F5897;
+  }
+</style>
+
+<h1>Cat Photo Finder</h1>
+<p class="message box">
+  The message will go here
+</p>
+<p>
+  <button id="getMessage">
+    Get Message
+  </button>
+</p>
+
+
+<!--
+  Q:
+  What is the difference between JSON and JavaScript object literal notation?
+  
+  GPT:
+  JSON (JavaScript Object Notation) is a lightweight data interchange format that is based on a subset of the JavaScript programming language. It is used to represent data structures and objects in a text-based, human-readable format. JSON is commonly used to transmit data between a server and a web application or between two systems.
+
+JavaScript object literal notation is a way to represent objects in JavaScript. It consists of a set of keys and values in curly braces, with the keys and values separated by a colon.
+
+Here's an example of a JavaScript object literal:
+
+        let person = {
+          name: 'John',
+          age: 30,
+          job: 'developer'
+        };
+
+This object has three properties: name, age, and job, with corresponding values of 'John', 30, and 'developer'.
+
+JSON is similar to JavaScript object literal notation, but there are a few differences. JSON only allows string values to be used as keys, whereas JavaScript allows any value to be used as a key. JSON also requires that keys be surrounded by double quotes, whereas in JavaScript object literal notation, keys can be either surrounded by double quotes or unquoted if they are valid JavaScript identifiers.
+
+Here's the same object as above, but represented in JSON:
+
+        {
+          "name": "John",
+          "age": 30,
+          "job": "developer"
+        }
+
+Both JSON and JavaScript object literal notation are used to represent objects, but JSON is mainly used for data interchange, while JavaScript object literal notation is used to create objects in JavaScript code.
+
+Q:
+I have no idea what this means can you explain it with pictures and arrows and differentiate specifically between my program, the server, and the API.  The second argument for open is the URL of the API you are requesting data from.
+
+GPT:
+Certainly! Here is a diagram that illustrates the process of making a request to an API using the open method:
+
+          +-----------------+          +---------------+          +------------+
+          | My Program      |          | Server        |          | API        |
+          |                 |          |               |          |            |
+          |  1. open        |----------| 2. request    |----------| 3. response|
+          |  4. send        |          |               |          |            |
+          |  5. receive     |          |               |          |            |
+          +-----------------+          +---------------+          +------------+
+
+      1.My program makes a request to the server by calling the open method with the URL of the API as the second argument.
+      2.The server receives the request and sends it to the API.
+      3.The API processes the request and sends a response back to the server.
+      4.The server receives the response and sends it back to my program.
+      5.My program receives the response and can then process the data it received from the API.
+
+In this process, the API is a separate system from the server and my program. The API is a collection of programming interfaces that allow different systems to communicate with each other and access data from each other. The server is a computer that hosts the API and handles requests to it from other systems, such as my program. My program is the program that makes a request to the API via the server.
+
+I hope this helps to clarify the relationship between the different components in this process! Let me know if you have any further questions.
+
+Q:
+const req = new XMLHttpRequest();
+req.open("GET",'/json/cats.json',true);
+req.send(); so this is my code. Is the .send() method responsible for what you described in step 2?
+
+GPT:
+Yes, that's correct! The send method of the XMLHttpRequest object is responsible for sending the request to the server.
+
+In your code, the open method is called with the following arguments:
+
+      ~"GET" - the HTTP method to use for the request
+      ~'/json/cats.json' - the URL of the API to send the request to
+      ~true - a boolean value that specifies whether the request should be asynchronous or not
+
+The send method is then called to send the request to the server. The send method can take an optional argument, which can be used to send data with the request. If you don't need to send any data with the request, you can just call send with no arguments.
+
+Here is an updated diagram that illustrates the process of making a request to an API using the open and send methods:
+
+            +-----------------+          +---------------+          +------------+
+            | My Program      |          | Server        |          | API        |
+            |                 |          |               |          |            |
+            |  1. open        |----------| 2. request    |----------| 3. response|
+            |  2. send        |          |               |          |            |
+            |  4. receive     |          |               |          |            |
+            +-----------------+          +---------------+          +------------+
+
+I hope this helps to clarify the role of the open and send methods in making a request to an API! Let me know if you have any further questions.
+
+Q:
+In this sentence "The send method is then called to send the request to the server. " do you mean send the request to the server so it can execute what we sent it in the .open() method or send this send method to the API for it to execute or neither and it's responsible for steps 3 and 4 where once the API has a response it uses our .send() method to go to the server at which point the server uses that same .send() method to send back to my program?
+
+GPT:
+The send method is called to send the request to the server. When the send method is called, it sends the request to the server, which then forwards the request to the API. The API processes the request and sends a response back to the server. The server receives the response and sends it back to the program.
+
+Here is an updated diagram that illustrates the process of making a request to an API using the open and send methods:
+
+            +-----------------+          +---------------+          +------------+
+            | My Program      |          | Server        |          | API        |
+            |                 |          |               |          |            |
+            |  1. open        |----------| 2. request    |----------| 3. response|
+            |  2. send        |<---------| 4. receive    |<---------| 5. send    |
+            |  6. receive     |          |               |          |            |
+            +-----------------+          +---------------+          +------------+
+
+In this process, the send method is called by the program to initiate the request, and it is also called by the server to send the response back to the program.
+
+I hope this helps to clarify the role of the send method in the process of making a request to an API! Let me know if you have any further questions.
+
+Q:
+Where is an API located?
+
+GPT:
+An API (Application Programming Interface) is a set of programming interfaces that allow different systems to communicate with each other and access data from each other. An API typically consists of a set of endpoints, or specific locations that can be accessed through the API, and a set of methods that can be used to perform operations on the data at each endpoint.
+
+An API can be located on a server, which is a computer that hosts the API and handles requests to it from other systems. The server can be located in a physical location, such as a data center, or it can be hosted in the cloud.
+
+To access an API, you typically need to know the URL of the API and the specific endpoints and methods that are available through the API. You can then use a programming language, such as JavaScript, to make requests to the API via the server and receive responses from the API.
+
+I hope this helps to clarify where an API is located! Let me know if you have any further questions.
+-->
